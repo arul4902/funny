@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+  <title>Should I Text My Ex? 👀 | The 3D Decision Oracle</title>
+  
+  <!-- Primary Meta Tags -->
+  <meta name="title" content="Should I Text My Ex? 👀 | The 3D Decision Oracle" />
+  <meta name="description" content="A cinematic 3D scroll-driven journey to stop you from sending that 2 a.m. text. Consult the cosmic oracle before you ruin your emotional progress." />
+  <meta name="theme-color" content="#0b0b10" />
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://should-i-text-my-ex.vercel.app/" />
+  <meta property="og:title" content="Should I Text My Ex? 👀 | The 3D Decision Oracle" />
+  <meta property="og:description" content="A cinematic 3D scroll-driven journey to stop you from sending that 2 a.m. text. Built with Three.js and GSAP." />
+  <meta property="og:image" content="https://images.unsplash.com/photo-1512428559087-560fa5ceab42?auto=format&fit=crop&w=1200&q=80" />
+
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image" />
+  <meta property="twitter:url" content="https://should-i-text-my-ex.vercel.app/" />
+  <meta property="twitter:title" content="Should I Text My Ex? 👀 | The 3D Decision Oracle" />
+  <meta property="twitter:description" content="A cinematic 3D scroll-driven journey to stop you from sending that 2 a.m. text." />
+  <meta property="twitter:image" content="https://images.unsplash.com/photo-1512428559087-560fa5ceab42?auto=format&fit=crop&w=1200&q=80" />
+
+  <!-- Emoji Favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📱</text></svg>" />
+
+  <!-- Google Fonts: Space Grotesk & Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;700;800;900&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="/src/style.css" />
+</head>
+<body>
+  <!-- Fixed Three.js WebGL Canvas -->
+  <canvas id="webgl-canvas" aria-hidden="true"></canvas>
+
+  <!-- Atmospheric Texture & Desktop Cursor Glow -->
+  <div class="noise-overlay" aria-hidden="true"></div>
+  <div id="cursor-glow" class="cursor-glow" aria-hidden="true"></div>
+  <div id="screen-flash" class="screen-flash" aria-hidden="true"></div>
+
+  <!-- WebGL Unsupported Fallback Notification -->
+  <div id="webgl-fallback" class="webgl-fallback" role="alert">
+    ⚠️ 3D graphics are limited on this device, but the Cosmic Oracle is still fully operational below!
+  </div>
+
+  <!-- Loading Screen -->
+  <div id="loader" class="loader" aria-label="Loading experience">
+    <div class="loader-spinner"></div>
+    <div id="loader-counter" class="loader-counter">0%</div>
+    <div class="loader-tagline">Summoning cosmic common sense...</div>
+  </div>
+
+  <!-- Top Floating Bar -->
+  <header class="top-bar">
+    <div class="brand-badge">⚡ THE 3AM DECISION ENGINE</div>
+    <div class="top-controls">
+      <button id="btn-audio" class="btn-icon" aria-label="Toggle sound effects">🔊</button>
+    </div>
+  </header>
+
+  <!-- Scroll-Driven Content Sections -->
+  <main class="scroll-container">
+    <!-- SECTION 1: HERO -->
+    <section class="section-hero" id="section-hero" aria-label="Introduction">
+      <div class="hero-content">
+        <div class="pill-badge" id="hero-badge">EMERGENCY PROTOCOL ACTIVE</div>
+        <h1 class="hero-title" id="hero-title">Should I text my ex? 👀</h1>
+        <p class="hero-subtitle" id="hero-subtitle">
+          Step away from your keyboard. Breathe. Scroll slowly to consult the celestial decision oracle before you make a catastrophic mistake.
+        </p>
+      </div>
+
+      <div class="hero-scroll-hint" id="hero-scroll-hint" aria-hidden="true">
+        <span>Scroll to resist</span>
+        <div class="scroll-pill"></div>
+      </div>
+    </section>
+
+    <!-- SECTION 2: THE TEMPTATION (PINNED) -->
+    <section class="story-section section-temptation" id="section-temptation" aria-label="The Temptation">
+      <div class="temptation-content">
+        <h2 class="temptation-line" id="temptation-line-1">It's late.</h2>
+        <h2 class="temptation-line" id="temptation-line-2">You're bored.</h2>
+        <h2 class="temptation-line accent" id="temptation-line-3">Their name is right there.</h2>
+      </div>
+    </section>
+
+    <!-- SECTION 3: THE SPIRAL (PINNED) -->
+    <section class="story-section section-spiral" id="section-spiral" aria-label="The Spiral">
+      <div class="spiral-card">
+        <div class="pill-badge" style="align-self: flex-start; color: var(--neon-cyan); border-color: rgba(0, 245, 212, 0.4); background: rgba(0, 245, 212, 0.1);">STAGE 2 : DELUSION</div>
+        <h2 class="spiral-title">The Spiral</h2>
+        <p class="spiral-desc">
+          You draft the message. You backspace. You stare at the 3 jumping dots in your head. Your thumb is hovering over the send arrow.
+        </p>
+
+        <!-- Dynamic Regret Meter -->
+        <div class="regret-meter-container">
+          <div class="regret-meter-header">
+            <span>PROJECTED REGRET LEVEL</span>
+            <span id="regret-counter" class="regret-counter-badge">0%</span>
+          </div>
+          <div class="regret-bar-track" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+            <div id="regret-progress-bar" class="regret-bar-fill"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 4: THE ORACLE (PINNED) -->
+    <section class="story-section section-oracle" id="section-oracle" aria-label="Consult The Oracle">
+      <div class="oracle-card" id="oracle-interactive-card">
+        <div class="pill-badge" style="color: var(--neon-violet); border-color: rgba(122, 92, 255, 0.4); background: rgba(122, 92, 255, 0.12);">COSMIC INTERVENTION</div>
+        <h2 class="oracle-title">Let the universe decide.</h2>
+        <p class="oracle-subtitle">
+          Before you sacrifice your dignity, subject your situation to the brutal truth of the crystal oracle.
+        </p>
+
+        <!-- Optional Name Input -->
+        <div class="oracle-input-group">
+          <label for="ex-name-input" class="oracle-input-label">Who are you obsessing over? (Optional)</label>
+          <input 
+            type="text" 
+            id="ex-name-input" 
+            class="oracle-input" 
+            placeholder="e.g. Rahul, Sarah, or Voldemort..." 
+            maxlength="25" 
+            autocomplete="off" 
+          />
+        </div>
+
+        <!-- Big Oracle CTA -->
+        <button id="btn-oracle" class="btn-oracle" type="button">
+          <span class="btn-text">🔮 Consult The Oracle</span>
+        </button>
+
+        <div class="oracle-subtext">
+          55% No • 30% Maybe • 15% Yes • 100% Unfiltered Truth
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- SECTION 5: VERDICT MODAL / OVERLAY -->
+  <div id="verdict-container" class="verdict-container" aria-live="polite" role="dialog" aria-modal="true" aria-labelledby="verdict-title" hidden>
+    <article class="verdict-card" id="verdict-card">
+      <button id="btn-dismiss-verdict" class="btn-close-verdict" aria-label="Close verdict">✕</button>
+
+      <span id="verdict-badge" class="verdict-badge">VERDICT</span>
+      <h2 id="verdict-title" class="verdict-title">ABSOLUTELY NOT 🚫</h2>
+      
+      <p id="verdict-quote" class="verdict-quote">
+        “You blocked them for a reason. Remember the reason.”
+      </p>
+
+      <div id="verdict-subtext" class="verdict-subtext" style="display: none;"></div>
+
+      <!-- Verdict Regret Meter -->
+      <div class="verdict-meter-box">
+        <div class="verdict-meter-label">
+          <span>REAL-TIME REGRET FACTOR</span>
+          <span id="verdict-regret-val" style="color: #ffffff; font-weight: 800;">94%</span>
+        </div>
+        <div class="regret-bar-track">
+          <div id="verdict-regret-fill" class="regret-bar-fill" style="width: 94%;"></div>
+        </div>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="verdict-actions">
+        <button id="btn-share" class="btn-action-primary" type="button">
+          <span>📤 Share My Result</span>
+        </button>
+        <button id="btn-ask-again" class="btn-action-secondary" type="button">
+          <span>🔄 Ask Again</span>
+        </button>
+      </div>
+    </article>
+  </div>
+
+  <!-- Toast Notification -->
+  <div id="toast" class="toast" role="status" aria-live="polite">Copied to clipboard! 📋</div>
+
+  <!-- Global Footer -->
+  <footer class="site-footer">
+    Built by <a href="https://instagram.com/arulforge" target="_blank" rel="noopener noreferrer">@arulforge</a>
+  </footer>
+
+  <!-- App Script -->
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>
